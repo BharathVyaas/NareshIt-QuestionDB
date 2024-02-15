@@ -1,0 +1,228 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.ag-header-cell {
+  font-size: 14px !important;
+}
+
+/*  UTILITY  */
+
+.pointer {
+  cursor: pointer;
+}
+
+/*  Modal  */
+
+.backdrop {
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background-color: #dddddd30;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal {
+  position: fixed;
+  top: 22%;
+  right: 24%;
+  background-color: #ddd;
+  width: 30rem;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  z-index: 101;
+}
+
+/*  Technology  */
+
+.technologyModal {
+  padding: 20px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.technologyModal-form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.technologyModal-form-group {
+  padding-inline: 2rem;
+}
+
+.technologyModal-form-group label {
+  font-weight: 500;
+}
+
+.technologyModal-form-group legend {
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.technologyModal-form-id {
+  position: absolute;
+  right: 16%;
+  top: 18%;
+  font-size: 0.9rem;
+  font-weight: 550;
+}
+
+.technologyModal-form-id input {
+  width: 4rem;
+  padding-inline: 0.4rem;
+  margin-left: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.technologyModal-form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.technologyModal-form-input .input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.technologyModal-form-input input[type="text"] {
+  flex: 1;
+}
+
+.technologyModal-form-input span {
+  position: absolute;
+  display: grid;
+  place-content: center;
+  right: 0%;
+  top: 0%;
+  width: 10%;
+  height: 75%;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #ddd;
+}
+
+.technologyModal-form-input input[type="text"],
+.technologyModal-form-input textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  padding-inline: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+}
+
+.technologyModal-form-input textarea {
+  height: 5rem;
+}
+
+.technologyModal-form-input button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.technologyModal-form-input button:hover {
+  background-color: #45a049;
+}
+
+.technologyModal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.technologyModal-close-button:hover {
+  color: #888;
+}
+
+.technologyModal-form-button {
+  display: flex;
+  margin-block: 1rem;
+  justify-content: space-evenly;
+}
+
+.technologyModal-form-button button {
+  width: 8rem;
+  height: 1.8rem;
+}
+
+/*  Technology DropBox  */
+
+.technologyModal-dropbox {
+  height: 30vh;
+  max-height: 30vh;
+  width: 100%;
+  max-width: 100%;
+  top: 70%;
+  background-color: #f0f8ff;
+  position: absolute;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  border: 0.1px solid rgba(0, 0, 0, 0.3);
+}
+
+.technologyModal-dropbox::-webkit-scrollbar {
+  width: 6px;
+}
+
+.technologyModal-dropbox::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
+}
+
+.technologyModal-dropbox::-webkit-scrollbar-track {
+  background-color: #f0f8ff;
+}
+
+.technologyModal-dropbox p {
+  cursor: pointer;
+  max-height: 3rem;
+  font-size: 1rem;
+  border-bottom: 0.1px solid #00000050;
+  padding-inline: 0.8rem;
+  padding-block: 0.4rem;
+  margin: 0;
+  color: #000;
+  background-color: #f0f8ff;
+}
+
+.technologyModal-dropbox p:hover {
+  background-color: #add8e6;
+}
+
+.subTopic-dropbox p {
+  max-height: 4rem;
+}
