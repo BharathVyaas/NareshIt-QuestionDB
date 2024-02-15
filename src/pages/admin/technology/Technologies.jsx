@@ -26,10 +26,24 @@ function Technologies() {
 
   // create new technology modal
   const [showModal, setShowModal] = useState(false);
+  // responsible for storing data required by the modal
+  const [modalData, setModalData] = useState(false);
 
   const modulesDataSelector = useSelector(
     (state) => state?.technologiesListReducer
   );
+
+  // Delete Option from the Table
+  const handleDelete = (rowData) => {
+    console.log("Row Data:", rowData);
+  };
+
+  // Edit Option from the Table
+  const handleEdit = (rowData) => {
+    console.log("Row Data:", rowData);
+    setModalData(rowData);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     dispatch(technologiesListSlice.actions.request());
@@ -112,11 +126,19 @@ function Technologies() {
             fontStyle: "normal",
           };
         },
-        cellRenderer: (parames) => {
+        cellRenderer: (params) => {
+          const { data } = params;
+
           return (
             <div>
-              <DeleteOutlineIcon style={{ color: "Red" }}></DeleteOutlineIcon>{" "}
-              <EditIcon style={{ color: "blue" }}></EditIcon>
+              <DeleteOutlineIcon
+                style={{ color: "Red" }}
+                onClick={() => handleDelete(data)}
+              />
+              <EditIcon
+                style={{ color: "blue" }}
+                onClick={() => handleEdit(data)}
+              />
             </div>
           );
         },
@@ -161,6 +183,7 @@ function Technologies() {
         <Sidenav></Sidenav>
         {showModal && (
           <ModalHandler
+            modalData={modalData}
             modalSubmitHandler={technologyModalSubmitHandler}
             modalCancelHandler={setShowModal}
           />
@@ -211,10 +234,11 @@ function Technologies() {
 
 export default Technologies;
 
-function ModalHandler({ modalSubmitHandler, modalCancelHandler }) {
+function ModalHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
   return (
     <ModalUi
       ModalParam={TechnologyModal}
+      modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}
     />

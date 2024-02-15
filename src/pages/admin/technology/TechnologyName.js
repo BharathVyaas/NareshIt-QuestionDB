@@ -1,12 +1,42 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import useDropDown from "../../../hooks/useDropDown";
 
-function TopicName({}, ref) {
-  const modulesDataSelector = useSelector((state) => state?.topicsListReducer);
+function TechnologyName(
+  { technologyName: technologyNameParam, technologyId },
+  ref
+) {
+  const modulesDataSelector = useSelector(
+    (state) => state?.technologiesListReducer
+  );
 
-  const [TopicName, setTopicName] = useState("");
+  // Find Default technology value
+  let defaultTechnologyName = "";
+  // need to use it outside because of async
+  (() => {
+    if (!defaultTechnologyName)
+      if (technologyId) {
+        defaultTechnologyName = modulesDataSelector?.response?.find((item) => {
+          return item.TechnologyID === technologyId;
+        })?.TechnologyName;
+      }
+  })();
+
+  // 2 way binding
+  const [technologyName, setTechnologyName] = useState(
+    defaultTechnologyName || technologyNameParam || ""
+  );
+
   const [dropDown, setDropDown] = useState(false);
+
+  // filter the dropDown
+  const [includedDropDownItems, dropDownChangeHandler] = useDropDown({
+    key: "TechnologyName",
+  });
+  useEffect(() => {
+    dropDownChangeHandler(technologyName, modulesDataSelector?.response);
+  }, [modulesDataSelector, technologyName]);
 
   // To close window when dropBox is open
   useEffect(() => {
@@ -23,10 +53,16 @@ function TopicName({}, ref) {
     };
   }, [dropDown]);
 
-  function dropBoxHandler(TopicName) {
-    setTopicName(TopicName);
+  function dropBoxHandler(TechnologyName) {
+    setTechnologyName(TechnologyName);
     setDropDown(false);
   }
+
+  function inputChangeHandler(e) {
+    setTechnologyName(e.target.value);
+  }
+
+  console.log("includedDropDownItems", includedDropDownItems);
 
   return (
     <div className="technologyModal-form-input">
@@ -36,8 +72,8 @@ function TopicName({}, ref) {
         <input
           ref={ref}
           type="text"
-          value={TopicName}
-          onChange={(e) => setTopicName(e.target.value)}
+          value={technologyName}
+          onChange={inputChangeHandler}
         />
         {/* Caret symbol to open and close dropbox */}
         <motion.span onClick={() => setDropDown((prev) => !prev)}>
@@ -52,14 +88,14 @@ function TopicName({}, ref) {
         {/*   DropDown for the Technology Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox">
-            {modulesDataSelector.response.map((item) => {
-              if (item.TopicName)
+            {includedDropDownItems.map((item) => {
+              if (item.TechnologyName)
                 return (
                   <p
                     key={item.TechnologyID}
-                    onClick={() => dropBoxHandler(item.TopicName)}
+                    onClick={() => dropBoxHandler(item.TechnologyName)}
                   >
-                    {item.TopicName}
+                    {item.TechnologyName}
                   </p>
                 );
             })}
@@ -70,4 +106,4 @@ function TopicName({}, ref) {
   );
 }
 
-export default forwardRef(TopicName);
+export default forwardRef(TechnologyName);

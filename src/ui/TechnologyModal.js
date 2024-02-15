@@ -3,7 +3,11 @@ import { Form } from "react-router-dom";
 import TechnologyName from "../pages/admin/technology/TechnologyName";
 import { useSelector } from "react-redux";
 
-function TechnologyModal({ modalSubmitHandler, modalCancelHandler }) {
+function TechnologyModal({
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   const idRef = useRef();
   const technologyNameRef = useRef();
   const descriptionRef = useRef();
@@ -27,15 +31,26 @@ function TechnologyModal({ modalSubmitHandler, modalCancelHandler }) {
     <div className="technologyModal">
       <form className="technologyModal-form">
         <fieldset className="technologyModal-form-group">
-          <legend>Create New Technology</legend>
+          <legend>
+            {modalData?.TechnologyID
+              ? "Edit Technology"
+              : "Create New Technology"}
+          </legend>
           <span className="technologyModal-form-id">
             ID
-            <input ref={idRef} value={id} disabled />
+            <input ref={idRef} value={modalData?.TechnologyID || id} disabled />
           </span>
-          <TechnologyName ref={technologyNameRef} />
+          <TechnologyName
+            technologyName={modalData?.TechnologyName}
+            ref={technologyNameRef}
+          />
           <div className="technologyModal-form-input">
             <label>Description</label>
-            <textarea ref={descriptionRef} type="text" />
+            <textarea
+              defaultValue={modalData.Description}
+              ref={descriptionRef}
+              type="text"
+            />
           </div>
           <div className="technologyModal-form-button">
             <button
@@ -48,7 +63,7 @@ function TechnologyModal({ modalSubmitHandler, modalCancelHandler }) {
               onClick={submitHandler}
               className="technologyModal-form-submit"
             >
-              Add
+              {modalData?.TechnologyID ? "Edit" : "Add"}
             </button>
           </div>
         </fieldset>

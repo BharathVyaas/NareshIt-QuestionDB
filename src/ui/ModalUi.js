@@ -3,7 +3,12 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 
-function ModalUi({ ModalParam, modalSubmitHandler, modalCancelHandler }) {
+function ModalUi({
+  ModalParam,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
@@ -14,6 +19,7 @@ function ModalUi({ ModalParam, modalSubmitHandler, modalCancelHandler }) {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         {
           <ModalParam
+            modalData={modalData}
             modalSubmitHandler={modalSubmitHandler}
             modalCancelHandler={modalCancelHandler}
           />

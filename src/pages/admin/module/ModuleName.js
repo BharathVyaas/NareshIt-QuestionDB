@@ -1,11 +1,12 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import useDropDown from "../../../hooks/useDropDown";
 
-function ModuleName({}, ref) {
+function ModuleName({ modalData }, ref) {
   const modulesDataSelector = useSelector((state) => state?.modulesListReduer);
 
-  const [ModuleName, setModuleName] = useState("");
+  const [moduleName, setModuleName] = useState(modalData.ModuleName);
   const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,15 @@ function ModuleName({}, ref) {
     setDropDown(false);
   }
 
+  // filter DropDown
+  const [includedDropDownItems, dropDownChangeHandler] = useDropDown({
+    key: "ModuleName",
+  });
+
+  useEffect(() => {
+    dropDownChangeHandler(moduleName, modulesDataSelector?.response);
+  }, [moduleName, modulesDataSelector]);
+
   return (
     <div className="technologyModal-form-input">
       <label>Module Name</label>
@@ -35,7 +45,7 @@ function ModuleName({}, ref) {
         <input
           ref={ref}
           type="text"
-          value={ModuleName}
+          value={moduleName}
           onChange={(e) => setModuleName(e.target.value)}
         />
         {/* Caret symbol to open and close dropbox */}
@@ -51,7 +61,7 @@ function ModuleName({}, ref) {
         {/*   DropDown for the Technology Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox">
-            {modulesDataSelector.response.map((item) => {
+            {includedDropDownItems.map((item) => {
               if (item.ModuleName)
                 return (
                   <p

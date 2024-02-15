@@ -25,6 +25,8 @@ function Modules() {
 
   // create new module modal
   const [showModal, setShowModal] = useState(false);
+  // responsible for storing data required by the modal
+  const [modalData, setModalData] = useState(false);
 
   const modulesDataSelector = useSelector((state) => state?.modulesListReduer);
 
@@ -32,6 +34,18 @@ function Modules() {
     dispatch(modulesListSlice.actions.request());
     setModuleData(modulesDataSelector.response);
   }, []);
+
+  // Delete Option from the Table
+  const handleDelete = (rowData) => {
+    console.log("Row Data:", rowData);
+  };
+
+  // Edit Option from the Table
+  const handleEdit = (rowData) => {
+    console.log("Row Data:", rowData);
+    setModalData(rowData);
+    setShowModal(true);
+  };
 
   const onGridReady = (params) => {
     let arr = [];
@@ -109,11 +123,19 @@ function Modules() {
             fontStyle: "normal",
           };
         },
-        cellRenderer: (parames) => {
+        cellRenderer: (params) => {
+          const { data } = params;
+
           return (
             <div>
-              <DeleteOutlineIcon style={{ color: "Red" }}></DeleteOutlineIcon>{" "}
-              <EditIcon style={{ color: "blue" }}></EditIcon>
+              <DeleteOutlineIcon
+                style={{ color: "Red" }}
+                onClick={() => handleDelete(data)}
+              ></DeleteOutlineIcon>{" "}
+              <EditIcon
+                style={{ color: "blue" }}
+                onClick={() => handleEdit(data)}
+              ></EditIcon>
             </div>
           );
         },
@@ -149,6 +171,7 @@ function Modules() {
         <Sidenav></Sidenav>
         {showModal && (
           <ModalHandler
+            modalData={modalData}
             modalSubmitHandler={moduleModalSubmitHandler}
             modalCancelHandler={setShowModal}
           />
@@ -195,10 +218,11 @@ function Modules() {
 
 export default Modules;
 
-function ModalHandler({ modalSubmitHandler, modalCancelHandler }) {
+function ModalHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
   return (
     <ModalUi
       ModalParam={ModuleModal}
+      modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}
     />
