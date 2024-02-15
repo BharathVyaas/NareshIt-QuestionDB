@@ -25,6 +25,8 @@ function Subtopics() {
 
   // create new topic modal
   const [showModal, setShowModal] = useState(false);
+  // responsible for storing data required by the modal
+  const [modalData, setModalData] = useState(false);
 
   const subTopicsDataSelector = useSelector(
     (state) => state?.subtopicsListReducer
@@ -34,6 +36,18 @@ function Subtopics() {
     dispatch(subtopicListSlice.actions.request());
     setSubTopicData(subTopicsDataSelector.response);
   }, []);
+
+  // Delete Option from the Table
+  const handleDelete = (rowData) => {
+    console.log("Row Data:", rowData);
+  };
+
+  // Edit Option from the Table
+  const handleEdit = (rowData) => {
+    console.log("Row Data:", rowData);
+    setModalData(rowData);
+    setShowModal(true);
+  };
 
   const onGridReady = (params) => {
     let arr = [];
@@ -113,10 +127,18 @@ function Subtopics() {
           };
         },
         cellRenderer: (parames) => {
+          const { data } = parames;
+
           return (
             <div>
-              <DeleteOutlineIcon style={{ color: "Red" }}></DeleteOutlineIcon>{" "}
-              <EditIcon style={{ color: "blue" }}></EditIcon>
+              <DeleteOutlineIcon
+                style={{ color: "Red" }}
+                onClick={() => handleDelete(data)}
+              ></DeleteOutlineIcon>{" "}
+              <EditIcon
+                style={{ color: "blue" }}
+                onClick={() => handleEdit(data)}
+              ></EditIcon>
             </div>
           );
         },
@@ -152,6 +174,7 @@ function Subtopics() {
         <Sidenav></Sidenav>
         {showModal && (
           <SubTopicHandler
+            modalData={modalData}
             modalSubmitHandler={subTopicModalSubmitHandler}
             modalCancelHandler={setShowModal}
           />
@@ -198,10 +221,15 @@ function Subtopics() {
 
 export default Subtopics;
 
-function SubTopicHandler({ modalSubmitHandler, modalCancelHandler }) {
+function SubTopicHandler({
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   return (
     <ModalUi
       ModalParam={SubTopicModal}
+      modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}
     />

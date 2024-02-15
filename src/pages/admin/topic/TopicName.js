@@ -3,10 +3,24 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import useDropDown from "../../../hooks/useDropDown";
 
-function TopicName({ modalData }, ref) {
+function TopicName({ modalData, topicId }, ref) {
   const modulesDataSelector = useSelector((state) => state?.topicsListReducer);
 
-  const [topicName, setTopicName] = useState(modalData?.TopicName || "");
+  // Find Default Topic value
+  let defaultTopicName = "";
+  // need to use it outside because of async
+  (() => {
+    if (!defaultTopicName)
+      if (topicId) {
+        defaultTopicName = modulesDataSelector?.response?.find((item) => {
+          return item.TopicID === topicId;
+        })?.TopicName;
+      }
+  })();
+
+  const [topicName, setTopicName] = useState(
+    defaultTopicName || modalData?.TopicName || ""
+  );
   const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
@@ -41,7 +55,7 @@ function TopicName({ modalData }, ref) {
     <div className="technologyModal-form-input">
       <label>Topic Name</label>
       <div className="input-wrapper">
-        {/* Technology Name Input element */}
+        {/* Topic Name Input element */}
         <input
           ref={ref}
           type="text"
@@ -58,7 +72,7 @@ function TopicName({ modalData }, ref) {
           </motion.div>
         </motion.span>
 
-        {/*   DropDown for the Technology Name   */}
+        {/*   DropDown for the Topic Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox">
             {includedDropDownItems.map((item) => {

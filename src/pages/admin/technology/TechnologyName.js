@@ -62,8 +62,6 @@ function TechnologyName(
     setTechnologyName(e.target.value);
   }
 
-  console.log("includedDropDownItems", includedDropDownItems);
-
   return (
     <div className="technologyModal-form-input">
       <label>Technology Name</label>

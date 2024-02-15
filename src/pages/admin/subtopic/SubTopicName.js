@@ -1,13 +1,16 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import useDropDown from "../../../hooks/useDropDown";
 
-function SubTopicName({}, ref) {
+function SubTopicName({ modalData }, ref) {
   const modulesDataSelector = useSelector(
     (state) => state?.subtopicsListReducer
   );
 
-  const [subTopicName, setSubTopicName] = useState("");
+  const [subTopicName, setSubTopicName] = useState(
+    modalData?.SubTopicName || ""
+  );
   const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
@@ -28,6 +31,14 @@ function SubTopicName({}, ref) {
     setSubTopicName(subTopicName);
     setDropDown(false);
   }
+
+  // filter the dropDown
+  const [includedDropDownItems, dropDownChangeHandler] = useDropDown({
+    key: "SubTopicName",
+  });
+  useEffect(() => {
+    dropDownChangeHandler(subTopicName, modulesDataSelector?.response);
+  }, [modulesDataSelector, subTopicName]);
 
   return (
     <div className="technologyModal-form-input">
@@ -53,7 +64,7 @@ function SubTopicName({}, ref) {
         {/*   DropDown for the Technology Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox subTopic-dropbox">
-            {modulesDataSelector.response.map((item) => {
+            {includedDropDownItems.map((item) => {
               if (item.SubTopicName)
                 return (
                   <p
