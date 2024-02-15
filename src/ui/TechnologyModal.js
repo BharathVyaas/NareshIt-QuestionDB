@@ -47,7 +47,7 @@ function TechnologyModal({
           <div className="technologyModal-form-input">
             <label>Description</label>
             <textarea
-              defaultValue={modalData.Description}
+              defaultValue={modalData?.Description}
               ref={descriptionRef}
               type="text"
             />

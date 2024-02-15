@@ -1,11 +1,12 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import useDropDown from "../../../hooks/useDropDown";
 
-function TopicName({}, ref) {
-  const topicDataSelector = useSelector((state) => state?.topicsListReducer);
+function TopicName({ modalData }, ref) {
+  const modulesDataSelector = useSelector((state) => state?.topicsListReducer);
 
-  const [topicName, setTopicName] = useState("");
+  const [topicName, setTopicName] = useState(modalData?.TopicName || "");
   const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
@@ -27,7 +28,15 @@ function TopicName({}, ref) {
     setDropDown(false);
   }
 
-  console.log("topicDataSelector", topicDataSelector.response);
+  // filter DropDown
+  const [includedDropDownItems, dropDownChangeHandler] = useDropDown({
+    key: "TopicName",
+  });
+
+  useEffect(() => {
+    dropDownChangeHandler(topicName, modulesDataSelector?.response);
+  }, [topicName, modulesDataSelector]);
+
   return (
     <div className="technologyModal-form-input">
       <label>Topic Name</label>
@@ -52,7 +61,7 @@ function TopicName({}, ref) {
         {/*   DropDown for the Technology Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox">
-            {topicDataSelector.response.map((item) => {
+            {includedDropDownItems.map((item) => {
               if (item.TopicName)
                 return (
                   <p

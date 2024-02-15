@@ -123,8 +123,8 @@ function Modules() {
             fontStyle: "normal",
           };
         },
-        cellRenderer: (params) => {
-          const { data } = params;
+        cellRenderer: (parames) => {
+          const { data } = parames;
 
           return (
             <div>

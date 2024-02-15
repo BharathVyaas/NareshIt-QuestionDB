@@ -25,6 +25,8 @@ function Topics() {
 
   // create new topic modal
   const [showModal, setShowModal] = useState(false);
+  // responsible for storing data required by the modal
+  const [modalData, setModalData] = useState(false);
 
   const topicDataSelector = useSelector((state) => state?.topicsListReducer);
 
@@ -32,6 +34,18 @@ function Topics() {
     dispatch(topicsListSlice.actions.request());
     setTopicData(topicDataSelector.response);
   }, []);
+
+  // Delete Option from the Table
+  const handleDelete = (rowData) => {
+    console.log("Row Data:", rowData);
+  };
+
+  // Edit Option from the Table
+  const handleEdit = (rowData) => {
+    console.log("Row Data:", rowData);
+    setModalData(rowData);
+    setShowModal(true);
+  };
 
   const onGridReady = (params) => {
     let arr = [];
@@ -111,10 +125,18 @@ function Topics() {
           };
         },
         cellRenderer: (parames) => {
+          const { data } = parames;
+
           return (
             <div>
-              <DeleteOutlineIcon style={{ color: "Red" }}></DeleteOutlineIcon>{" "}
-              <EditIcon style={{ color: "blue" }}></EditIcon>
+              <DeleteOutlineIcon
+                style={{ color: "Red" }}
+                onClick={() => handleDelete(data)}
+              ></DeleteOutlineIcon>{" "}
+              <EditIcon
+                style={{ color: "blue" }}
+                onClick={() => handleEdit(data)}
+              ></EditIcon>
             </div>
           );
         },
@@ -150,6 +172,7 @@ function Topics() {
         <Sidenav></Sidenav>
         {showModal && (
           <TopicHandler
+            modalData={modalData}
             modalSubmitHandler={topicModalSubmitHandler}
             modalCancelHandler={setShowModal}
           />
@@ -196,10 +219,11 @@ function Topics() {
 
 export default Topics;
 
-function TopicHandler({ modalSubmitHandler, modalCancelHandler }) {
+function TopicHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
   return (
     <ModalUi
       ModalParam={TopicModal}
+      modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}
     />

@@ -15,8 +15,6 @@ function ModuleModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
     modalCancelHandler(false);
   }
 
-  console.log("modalData", modalData);
-
   function submitHandler() {
     modalSubmitHandler(
       idRef.current.value,
@@ -33,7 +31,7 @@ function ModuleModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
           <legend>Create New Module</legend>
           <span className="technologyModal-form-id">
             ID
-            <input ref={idRef} value={id} disabled />
+            <input ref={idRef} value={modalData.ModuleID || id} disabled />
           </span>
           <TechnologyName
             ref={technologyRef}

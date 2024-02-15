@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import ModuleName from "../pages/admin/module/ModuleName";
 import TopicName from "../pages/admin/topic/TopicName";
 
-function TopicModal({ modalSubmitHandler, modalCancelHandler }) {
+function TopicModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
   const idRef = useRef();
   const topicRef = useRef();
   const descriptionRef = useRef();
@@ -15,6 +15,8 @@ function TopicModal({ modalSubmitHandler, modalCancelHandler }) {
   function cancelHandler() {
     modalCancelHandler(false);
   }
+
+  console.log("modalData", modalData);
 
   function submitHandler() {
     modalSubmitHandler(
@@ -32,12 +34,16 @@ function TopicModal({ modalSubmitHandler, modalCancelHandler }) {
           <legend>Create New Topic</legend>
           <span className="technologyModal-form-id">
             ID
-            <input ref={idRef} value={id} disabled />
+            <input ref={idRef} value={modalData.TopicID || id} disabled />
           </span>
-          <TopicName ref={topicRef} />
+          <TopicName ref={topicRef} modalData={modalData} />
           <div className="technologyModal-form-input">
             <label>Description</label>
-            <textarea ref={descriptionRef} type="text" />
+            <textarea
+              ref={descriptionRef}
+              defaultValue={modalData?.Description}
+              type="text"
+            />
           </div>
           <div className="technologyModal-form-button">
             <button
