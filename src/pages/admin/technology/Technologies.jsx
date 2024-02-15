@@ -1,4 +1,4 @@
-import { React, useEffect, useMemo, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Sidenav from "../../../components/Sidenav";
 import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "../../../redux/hooks.helper";
@@ -27,25 +27,9 @@ function Technologies() {
   // create new technology modal
   const [showModal, setShowModal] = useState(false);
 
-  // api response
   const modulesDataSelector = useSelector(
     (state) => state?.technologiesListReducer
   );
-
-  // local data
-  const technologyDataSelector = useSelector(
-    (state) => state?.technologyReducer
-  );
-
-  // Responsible for storing all data related to TechnologyPage
-  const technologyData = useMemo(() => {
-    return {
-      api: modulesDataSelector?.response,
-      local: technologyDataSelector,
-    };
-  }, [modulesDataSelector, technologyDataSelector]);
-
-  console.log("technologyData", technologyData);
 
   useEffect(() => {
     dispatch(technologiesListSlice.actions.request());
@@ -170,7 +154,7 @@ function Technologies() {
     ); */
   }
 
-  //console.log("rowData", rowData);
+  console.log("rowData", rowData);
   return (
     <>
       <Box sx={{ display: "flex" }}>
