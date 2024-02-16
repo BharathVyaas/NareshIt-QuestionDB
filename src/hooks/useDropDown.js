@@ -8,7 +8,7 @@ function useDropDown({ key }) {
 
   useEffect(() => {
     setIncludedDropDownItems(() => {
-      if (filterStr) {
+      if (filterStr && dataArr) {
         const result = dataArr.filter((item) => {
           return item[key]?.toLowerCase().includes(filterStr.toLowerCase());
         });

@@ -42,7 +42,7 @@ function Technologies() {
   const handleEdit = (rowData) => {
     console.log("Row Data:", rowData);
     setModalData(rowData);
-    setShowModal(true);
+    setShowModal({ type: "edit", from: "technologies" });
   };
 
   useEffect(() => {
@@ -174,18 +174,24 @@ function Technologies() {
       technologyName,
       technologyDescription
     ); */
+    setModalData({});
   }
 
-  console.log("rowData", rowData);
+  function technologyModalcancelHandler() {
+    setShowModal(false);
+    setModalData({});
+  }
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <Sidenav></Sidenav>
         {showModal && (
           <ModalHandler
+            flag={showModal}
             modalData={modalData}
             modalSubmitHandler={technologyModalSubmitHandler}
-            modalCancelHandler={setShowModal}
+            modalCancelHandler={technologyModalcancelHandler}
           />
         )}
         <Box
@@ -208,7 +214,7 @@ function Technologies() {
               {/* Create New Technology */}
               <Button
                 onClick={() => {
-                  setShowModal(true);
+                  setShowModal({ type: "create", from: "technologies" });
                 }}
                 variant="outlined"
                 startIcon={<AddIcon />}
@@ -234,9 +240,15 @@ function Technologies() {
 
 export default Technologies;
 
-function ModalHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
+function ModalHandler({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   return (
     <ModalUi
+      flag={flag}
       ModalParam={TechnologyModal}
       modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}

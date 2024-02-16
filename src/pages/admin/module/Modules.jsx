@@ -44,7 +44,7 @@ function Modules() {
   const handleEdit = (rowData) => {
     console.log("Row Data:", rowData);
     setModalData(rowData);
-    setShowModal(true);
+    setShowModal({ type: "edit", from: "module" });
   };
 
   const onGridReady = (params) => {
@@ -164,6 +164,11 @@ function Modules() {
     console.log("modules.jsx", id, technologyName, moduleName);
   }
 
+  function technologyModalcancelHandler() {
+    setShowModal(false);
+    setModalData(false);
+  }
+
   console.log("rowData", rowData);
   return (
     <>
@@ -172,8 +177,9 @@ function Modules() {
         {showModal && (
           <ModalHandler
             modalData={modalData}
+            flag={showModal}
             modalSubmitHandler={moduleModalSubmitHandler}
-            modalCancelHandler={setShowModal}
+            modalCancelHandler={technologyModalcancelHandler}
           />
         )}
         <Box
@@ -193,7 +199,7 @@ function Modules() {
             <Divider />
             <div style={{ marginTop: "30px", marginBottom: "5px" }}>
               <Button
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowModal({ type: "create", from: "module" })}
                 variant="outlined"
                 startIcon={<AddIcon />}
               >
@@ -218,10 +224,16 @@ function Modules() {
 
 export default Modules;
 
-function ModalHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
+function ModalHandler({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   return (
     <ModalUi
       ModalParam={ModuleModal}
+      flag={flag}
       modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}

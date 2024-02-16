@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import useDropDown from "../../../hooks/useDropDown";
 
-function SubTopicName({ modalData }, ref) {
+function SubTopicName({ flag, modalData }, ref) {
   const modulesDataSelector = useSelector(
     (state) => state?.subtopicsListReducer
   );
@@ -48,18 +48,21 @@ function SubTopicName({ modalData }, ref) {
         <input
           ref={ref}
           type="text"
+          placeholder="language interoperability"
           value={subTopicName}
           onChange={(e) => setSubTopicName(e.target.value)}
         />
         {/* Caret symbol to open and close dropbox */}
-        <motion.span onClick={() => setDropDown((prev) => !prev)}>
-          <motion.div
-            animate={{ rotate: dropDown ? 180 : 0 }}
-            className="pointer"
-          >
-            &#9650;
-          </motion.div>
-        </motion.span>
+        {(flag?.type === "edit" || flag?.from !== "subTopic") && (
+          <motion.span onClick={() => setDropDown((prev) => !prev)}>
+            <motion.div
+              animate={{ rotate: dropDown ? 180 : 0 }}
+              className="pointer"
+            >
+              &#9650;
+            </motion.div>
+          </motion.span>
+        )}
 
         {/*   DropDown for the Technology Name   */}
         {dropDown && (

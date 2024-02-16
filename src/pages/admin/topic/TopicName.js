@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import useDropDown from "../../../hooks/useDropDown";
 
-function TopicName({ modalData, topicId }, ref) {
+function TopicName({ flag, modalData, topicId }, ref) {
   const modulesDataSelector = useSelector((state) => state?.topicsListReducer);
 
   // Find Default Topic value
@@ -17,6 +17,8 @@ function TopicName({ modalData, topicId }, ref) {
         })?.TopicName;
       }
   })();
+
+  console.log("topic", flag);
 
   const [topicName, setTopicName] = useState(
     defaultTopicName || modalData?.TopicName || ""
@@ -59,18 +61,21 @@ function TopicName({ modalData, topicId }, ref) {
         <input
           ref={ref}
           type="text"
+          placeholder="polymorphism"
           value={topicName}
           onChange={(e) => setTopicName(e.target.value)}
         />
         {/* Caret symbol to open and close dropbox */}
-        <motion.span onClick={() => setDropDown((prev) => !prev)}>
-          <motion.div
-            animate={{ rotate: dropDown ? 180 : 0 }}
-            className="pointer"
-          >
-            &#9650;
-          </motion.div>
-        </motion.span>
+        {(flag?.type === "edit" || flag?.from !== "topic") && (
+          <motion.span onClick={() => setDropDown((prev) => !prev)}>
+            <motion.div
+              animate={{ rotate: dropDown ? 180 : 0 }}
+              className="pointer"
+            >
+              &#9650;
+            </motion.div>
+          </motion.span>
+        )}
 
         {/*   DropDown for the Topic Name   */}
         {dropDown && (

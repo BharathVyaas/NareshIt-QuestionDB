@@ -46,7 +46,7 @@ function Subtopics() {
   const handleEdit = (rowData) => {
     console.log("Row Data:", rowData);
     setModalData(rowData);
-    setShowModal(true);
+    setShowModal({ type: "edit", from: "subTopic" });
   };
 
   const onGridReady = (params) => {
@@ -174,6 +174,7 @@ function Subtopics() {
         <Sidenav></Sidenav>
         {showModal && (
           <SubTopicHandler
+            flag={showModal}
             modalData={modalData}
             modalSubmitHandler={subTopicModalSubmitHandler}
             modalCancelHandler={setShowModal}
@@ -196,7 +197,9 @@ function Subtopics() {
             <Divider />
             <div style={{ marginTop: "30px", marginBottom: "5px" }}>
               <Button
-                onClick={() => setShowModal(true)}
+                onClick={() =>
+                  setShowModal({ type: "create", from: "subTopic" })
+                }
                 variant="outlined"
                 startIcon={<AddIcon />}
               >
@@ -223,6 +226,7 @@ export default Subtopics;
 
 function SubTopicHandler({
   modalData,
+  flag,
   modalSubmitHandler,
   modalCancelHandler,
 }) {
@@ -230,6 +234,7 @@ function SubTopicHandler({
     <ModalUi
       ModalParam={SubTopicModal}
       modalData={modalData}
+      flag={flag}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}
     />

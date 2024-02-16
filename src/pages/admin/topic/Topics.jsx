@@ -44,7 +44,7 @@ function Topics() {
   const handleEdit = (rowData) => {
     console.log("Row Data:", rowData);
     setModalData(rowData);
-    setShowModal(true);
+    setShowModal({ type: "edit", from: "topic" });
   };
 
   const onGridReady = (params) => {
@@ -172,6 +172,7 @@ function Topics() {
         <Sidenav></Sidenav>
         {showModal && (
           <TopicHandler
+            flag={showModal}
             modalData={modalData}
             modalSubmitHandler={topicModalSubmitHandler}
             modalCancelHandler={setShowModal}
@@ -194,7 +195,7 @@ function Topics() {
             <Divider />
             <div style={{ marginTop: "30px", marginBottom: "5px" }}>
               <Button
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowModal({ type: "create", from: "topic" })}
                 variant="outlined"
                 startIcon={<AddIcon />}
               >
@@ -219,10 +220,16 @@ function Topics() {
 
 export default Topics;
 
-function TopicHandler({ modalData, modalSubmitHandler, modalCancelHandler }) {
+function TopicHandler({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   return (
     <ModalUi
       ModalParam={TopicModal}
+      flag={flag}
       modalData={modalData}
       modalSubmitHandler={modalSubmitHandler}
       modalCancelHandler={modalCancelHandler}

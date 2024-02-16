@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 function ModalUi({
   ModalParam,
+  flag,
   modalData,
   modalSubmitHandler,
   modalCancelHandler,
@@ -16,9 +17,16 @@ function ModalUi({
       onClick={() => modalCancelHandler(false)}
       className="backdrop"
     >
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal"
+        onClick={(e) => {
+          modalCancelHandler(false);
+          e.stopPropagation();
+        }}
+      >
         {
           <ModalParam
+            flag={flag}
             modalData={modalData}
             modalSubmitHandler={modalSubmitHandler}
             modalCancelHandler={modalCancelHandler}

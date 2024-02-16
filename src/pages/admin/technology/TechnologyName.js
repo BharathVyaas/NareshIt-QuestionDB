@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import useDropDown from "../../../hooks/useDropDown";
 
 function TechnologyName(
-  { technologyName: technologyNameParam, technologyId },
+  { technologyName: technologyNameParam, technologyId, flag },
   ref
 ) {
   const modulesDataSelector = useSelector(
     (state) => state?.technologiesListReducer
   );
+
+  console.log(flag?.type === "edit" || flag?.from !== "technologies");
 
   // Find Default technology value
   let defaultTechnologyName = "";
@@ -70,18 +72,21 @@ function TechnologyName(
         <input
           ref={ref}
           type="text"
+          placeholder="React"
           value={technologyName}
           onChange={inputChangeHandler}
         />
         {/* Caret symbol to open and close dropbox */}
-        <motion.span onClick={() => setDropDown((prev) => !prev)}>
-          <motion.div
-            animate={{ rotate: dropDown ? 180 : 0 }}
-            className="pointer"
-          >
-            &#9650;
-          </motion.div>
-        </motion.span>
+        {(flag?.type === "edit" || flag?.from !== "technologies") && (
+          <motion.span onClick={() => setDropDown((prev) => !prev)}>
+            <motion.div
+              animate={{ rotate: dropDown ? 180 : 0 }}
+              className="pointer"
+            >
+              &#9650;
+            </motion.div>
+          </motion.span>
+        )}
 
         {/*   DropDown for the Technology Name   */}
         {dropDown && (

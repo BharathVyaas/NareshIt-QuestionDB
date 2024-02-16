@@ -4,6 +4,7 @@ import TechnologyName from "../pages/admin/technology/TechnologyName";
 import { useSelector } from "react-redux";
 
 function TechnologyModal({
+  flag,
   modalData,
   modalSubmitHandler,
   modalCancelHandler,
@@ -41,6 +42,7 @@ function TechnologyModal({
             <input ref={idRef} value={modalData?.TechnologyID || id} disabled />
           </span>
           <TechnologyName
+            flag={flag}
             technologyName={modalData?.TechnologyName}
             ref={technologyNameRef}
           />

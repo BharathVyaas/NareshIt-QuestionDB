@@ -6,8 +6,15 @@ import ModuleName from "../pages/admin/module/ModuleName";
 import TopicName from "../pages/admin/topic/TopicName";
 import SubTopicName from "../pages/admin/subtopic/SubTopicName";
 
-function SubTopicModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
+function SubTopicModal({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   const idRef = useRef();
+  const technologyRef = useRef();
+  const moduleRef = useRef();
   const topicRef = useRef();
   const subTopicRef = useRef();
 
@@ -35,8 +42,14 @@ function SubTopicModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
             ID
             <input ref={idRef} value={modalData?.SubTopicID || id} disabled />
           </span>
-          <TopicName ref={topicRef} topicId={modalData?.TopicID} />
-          <SubTopicName ref={subTopicRef} modalData={modalData} />
+          <TechnologyName
+            ref={technologyRef}
+            flag={flag}
+            modalData={modalData}
+          />
+          <ModuleName ref={moduleRef} flag={flag} modalData={modalData} />
+          <TopicName ref={topicRef} flag={flag} topicId={modalData?.TopicID} />
+          <SubTopicName ref={subTopicRef} flag={flag} modalData={modalData} />
           <div className="technologyModal-form-button">
             <button
               onClick={cancelHandler}

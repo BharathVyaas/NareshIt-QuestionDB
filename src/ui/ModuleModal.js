@@ -4,7 +4,12 @@ import TechnologyName from "../pages/admin/technology/TechnologyName";
 import { useSelector } from "react-redux";
 import ModuleName from "../pages/admin/module/ModuleName";
 
-function ModuleModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
+function ModuleModal({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
   const idRef = useRef();
   const technologyRef = useRef();
   const moduleRef = useRef();
@@ -35,9 +40,10 @@ function ModuleModal({ modalData, modalSubmitHandler, modalCancelHandler }) {
           </span>
           <TechnologyName
             ref={technologyRef}
+            flag={flag}
             technologyId={modalData?.TechnologyID}
           />
-          <ModuleName ref={moduleRef} modalData={modalData} />
+          <ModuleName ref={moduleRef} flag={flag} modalData={modalData} />
           <div className="technologyModal-form-button">
             <button
               onClick={cancelHandler}
