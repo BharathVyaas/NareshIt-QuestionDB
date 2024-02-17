@@ -18,10 +18,42 @@ code {
   font-size: 14px !important;
 }
 
+body {
+  border-radius: 0.5rem;
+}
+
 /*  UTILITY  */
 
 .pointer {
   cursor: pointer;
+}
+
+.cancel {
+  color: white;
+  background-color: rgb(220 38 38);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  letter-spacing: 0.025em;
+  border: 0;
+  outline: 0;
+}
+
+.cancel:hover {
+  background-color: rgb(185 28 28);
+}
+
+.add {
+  color: white;
+  background-color: rgb(30 64 175);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  letter-spacing: 0.025em;
+  border: 0;
+  outline: 0;
+}
+
+.add:hover {
+  background-color: rgb(30 58 138);
 }
 
 /*  Modal  */
@@ -51,8 +83,8 @@ code {
   padding: 20px;
   width: 30rem;
   background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .technologyModal-form-input {
@@ -63,15 +95,20 @@ code {
 .technologyModal-form-group {
   padding-inline: 2rem;
   position: relative;
+  padding-top: 1rem;
+  border: 2px solid rgb(30 64 175);
+  border-radius: 0.5rem;
 }
 
 .technologyModal-form-group label {
   font-weight: 500;
+  color: rgb(23 37 84);
 }
 
 .technologyModal-form-group legend {
   font-weight: 600;
   margin-bottom: 0.6rem;
+  color: rgb(23 37 84);
 }
 
 .technologyModal-form-id {
@@ -87,7 +124,7 @@ code {
   padding-inline: 0.4rem;
   margin-left: 0.2rem;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .technologyModal-form-input {
@@ -113,19 +150,25 @@ code {
   top: 0%;
   width: 10%;
   height: 75%;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   background-color: transparent;
 }
 
+.technologyModal-form-input label {
+  margin-left: 0.2rem;
+}
+
 .technologyModal-form-input input[type="text"],
 .technologyModal-form-input textarea {
   margin-bottom: 10px;
+  margin-top: 3px;
   padding: 8px;
+  padding-block: 0.7rem;
   padding-inline: 0.8rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   font-size: 14px;
   position: relative;
 }
@@ -135,7 +178,6 @@ code {
 }
 
 .technologyModal-form-input button {
-  background-color: #4caf50;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -143,7 +185,7 @@ code {
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 
@@ -188,7 +230,7 @@ code {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  border: 0.1px solid rgba(0, 0, 0, 0.3);
+  border: 0.1px solid rgba(255, 0, 0, 0.3);
 }
 
 .technologyModal-dropbox::-webkit-scrollbar {

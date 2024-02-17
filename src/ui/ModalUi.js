@@ -21,17 +21,18 @@ function ModalUi({
         className="modal"
         onClick={(e) => {
           modalCancelHandler(false);
-          e.stopPropagation();
         }}
       >
-        {
-          <ModalParam
-            flag={flag}
-            modalData={modalData}
-            modalSubmitHandler={modalSubmitHandler}
-            modalCancelHandler={modalCancelHandler}
-          />
-        }
+        <div onClick={(e) => e.stopPropagation()}>
+          {
+            <ModalParam
+              flag={flag}
+              modalData={modalData}
+              modalSubmitHandler={modalSubmitHandler}
+              modalCancelHandler={modalCancelHandler}
+            />
+          }
+        </div>
       </div>
     </motion.div>,
     document.getElementById("modal")

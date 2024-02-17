@@ -47,13 +47,13 @@ function ModuleModal({
           <div className="technologyModal-form-button">
             <button
               onClick={cancelHandler}
-              className="technologyModal-form-cancel"
+              className="cancel technologyModal-form-cancel"
             >
               Cancel
             </button>
             <button
               onClick={submitHandler}
-              className="technologyModal-form-submit"
+              className="add technologyModal-form-submit"
             >
               Add
             </button>
