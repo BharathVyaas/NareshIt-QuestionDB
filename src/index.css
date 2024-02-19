@@ -265,3 +265,31 @@ body {
 .subTopic-dropbox p {
   max-height: 4rem;
 }
+
+/*  Question view Modal  */
+.questionviewmodal {
+  position: absolute;
+  width: 60%;
+  height: 80vh;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow-x: scroll;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  padding: 2rem;
+  top: 20%;
+  left: 20%;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.hide-scroll::-webkit-scrollbar-thumb {
+  width: 0;
+  visibility: hidden;
+}
+
+.hide-scroll::-webkit-scrollbar-track {
+  width: 0;
+  visibility: hidden;
+}

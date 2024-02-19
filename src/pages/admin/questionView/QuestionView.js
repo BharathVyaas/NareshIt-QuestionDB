@@ -17,6 +17,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Modal } from "@mui/material";
 import ModalUi from "../../../ui/ModalUi";
 import axios from "axios";
+import QuestionViewModal from "../../../ui/QuestionViewModal";
+
+// to get selected question data
+
+function getQuestionData(questionID, arr) {
+  return arr.find((ele) => ele.QuestionID == questionID);
+}
 
 function QuestionView() {
   const [moduleData, setModuleData] = useState([]);
@@ -51,12 +58,23 @@ function QuestionView() {
     }
   }, [moduleData]);
 
+  const handleCellClick = (e) => {
+    const selectedQuestion = getQuestionData(e.data.QuestionID, moduleData);
+
+    rowData.question = selectedQuestion;
+    setModalData(rowData);
+    setShowModal({ type: "view", from: "technologies" });
+  };
+
   const handleDelete = (rowData) => {
     console.log("Row Data:", rowData);
   };
 
   const handleEdit = (rowData) => {
     console.log("Row Data:", rowData);
+    const selectedQuestion = getQuestionData(rowData.QuestionID, moduleData);
+
+    rowData.question = selectedQuestion;
     setModalData(rowData);
     setShowModal({ type: "edit", from: "technologies" });
   };
@@ -114,16 +132,17 @@ function QuestionView() {
           color: "#636363",
           fontStyle: "normal",
         },
-        cellRendererFramework: (params) => {
-          const { data } = params;
+        cellRenderer: (parames) => {
+          const { data } = parames;
+
           return (
             <div>
               <DeleteOutlineIcon
-                style={{ color: "Red", cursor: "pointer" }}
+                style={{ color: "Red" }}
                 onClick={() => handleDelete(data)}
               />
               <EditIcon
-                style={{ color: "blue", cursor: "pointer", marginLeft: "10px" }}
+                style={{ color: "blue" }}
                 onClick={() => handleEdit(data)}
               />
             </div>
@@ -193,6 +212,7 @@ function QuestionView() {
                 rowData={rowData}
                 onGridReady={onGridReady}
                 columnDefs={columnDefs}
+                onCellClicked={handleCellClick}
               />
             ) : (
               <div>loading</div>
@@ -205,3 +225,20 @@ function QuestionView() {
 }
 
 export default QuestionView;
+
+function ModalHandler({
+  flag,
+  modalData,
+  modalSubmitHandler,
+  modalCancelHandler,
+}) {
+  return (
+    <ModalUi
+      flag={flag}
+      ModalParam={QuestionViewModal}
+      modalData={modalData}
+      modalSubmitHandler={modalSubmitHandler}
+      modalCancelHandler={modalCancelHandler}
+    />
+  );
+}
