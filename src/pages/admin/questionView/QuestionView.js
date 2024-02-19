@@ -59,11 +59,15 @@ function QuestionView() {
   }, [moduleData]);
 
   const handleCellClick = (e) => {
-    const selectedQuestion = getQuestionData(e.data.QuestionID, moduleData);
+    if (!showModal) {
+      const selectedQuestion = getQuestionData(e.data.QuestionID, moduleData);
 
-    rowData.question = selectedQuestion;
-    setModalData(rowData);
-    setShowModal({ type: "view", from: "technologies" });
+      rowData.question = selectedQuestion;
+      rowData.type = "view";
+
+      setModalData(rowData);
+      setShowModal({ type: "view", from: "technologies" });
+    }
   };
 
   const handleDelete = (rowData) => {
@@ -75,6 +79,8 @@ function QuestionView() {
     const selectedQuestion = getQuestionData(rowData.QuestionID, moduleData);
 
     rowData.question = selectedQuestion;
+    rowData.type = "edit";
+
     setModalData(rowData);
     setShowModal({ type: "edit", from: "technologies" });
   };
@@ -143,7 +149,10 @@ function QuestionView() {
               />
               <EditIcon
                 style={{ color: "blue" }}
-                onClick={() => handleEdit(data)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEdit(data);
+                }}
               />
             </div>
           );
