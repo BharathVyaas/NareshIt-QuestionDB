@@ -18,6 +18,7 @@ import { Modal } from "@mui/material";
 import ModalUi from "../../../ui/ModalUi";
 import axios from "axios";
 import QuestionViewModal from "../../../ui/QuestionViewModal";
+import { useParams } from "react-router-dom";
 
 // to get selected question data
 
@@ -26,6 +27,7 @@ function getQuestionData(questionID, arr) {
 }
 
 function QuestionView() {
+  const { SubTopicID } = useParams();
   const [moduleData, setModuleData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const [columnDefs, setColumnDefs] = useState(null);
@@ -59,14 +61,16 @@ function QuestionView() {
   }, [moduleData]);
 
   const handleCellClick = (e) => {
-    if (!showModal) {
-      const selectedQuestion = getQuestionData(e.data.QuestionID, moduleData);
+    if (e?.colDef?.headerName !== "Action") {
+      if (!showModal) {
+        const selectedQuestion = getQuestionData(e.data.QuestionID, moduleData);
 
-      rowData.question = selectedQuestion;
-      rowData.type = "view";
+        rowData.question = selectedQuestion;
+        rowData.type = "view";
 
-      setModalData(rowData);
-      setShowModal({ type: "view", from: "technologies" });
+        setModalData(rowData);
+        setShowModal({ type: "view", from: "technologies" });
+      }
     }
   };
 
@@ -161,15 +165,13 @@ function QuestionView() {
     ]);
   };
 
-  function technologyModalSubmitHandler(
-    id,
-    technologyName,
-    technologyDescription
-  ) {
+  function questionModalSubmitHandler(questionData) {
+    console.log(questionData);
+    setShowModal(false);
     setModalData({});
   }
 
-  function technologyModalcancelHandler() {
+  function questionModalcancelHandler() {
     setShowModal(false);
     setModalData({});
   }
@@ -184,8 +186,8 @@ function QuestionView() {
           <ModalHandler
             flag={showModal}
             modalData={modalData}
-            modalSubmitHandler={technologyModalSubmitHandler}
-            modalCancelHandler={technologyModalcancelHandler}
+            modalSubmitHandler={questionModalSubmitHandler}
+            modalCancelHandler={questionModalcancelHandler}
           />
         )}
         <Box

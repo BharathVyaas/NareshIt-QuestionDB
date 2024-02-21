@@ -16,8 +16,12 @@ import Divider from "@mui/material/Divider";
 import EditIcon from "@mui/icons-material/Edit";
 import SubTopicModal from "../../../ui/SubTopicModal";
 import ModalUi from "../../../ui/ModalUi";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function Subtopics() {
+  const { TopicID } = useParams();
+  const navigate = useNavigate();
   var dispatch = useDispatch();
   const [subTopicsData, setSubTopicData] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -32,10 +36,23 @@ function Subtopics() {
     (state) => state?.subtopicsListReducer
   );
 
+  const subTopicFetchHanlder = async () => {
+    const res = await axios.get(
+      `https://www.nareshit.net/fetchSubTopics/${TopicID}`
+    );
+    console.log("res.data--", res.data);
+    setModalData(res.data);
+  };
+
   useEffect(() => {
-    dispatch(subtopicListSlice.actions.request());
-    setSubTopicData(subTopicsDataSelector.response);
+    subTopicFetchHanlder();
   }, []);
+
+  const cellClickHandler = async (e) => {
+    if (e.colDef.field !== "Action") {
+      navigate(`/question-view/${e.data.SubTopicID}`);
+    }
+  };
 
   // Delete Option from the Table
   const handleDelete = (rowData) => {
@@ -150,7 +167,7 @@ function Subtopics() {
 
   useEffect(() => {
     console.log("modulesDataSelector", subTopicsDataSelector);
-    setRowData(subTopicsDataSelector.response);
+    setSubTopicData(subTopicsDataSelector.response);
   }, [subTopicsDataSelector]);
 
   // Column Definitions: Defines & controls grid columns.
@@ -206,11 +223,12 @@ function Subtopics() {
                 New
               </Button>
             </div>
-            {subTopicsData.length > 0 ? (
+            {modalData.length > 0 ? (
               <AgGridReact
                 rowData={rowData}
                 onGridReady={onGridReady}
                 columnDefs={columnDefs}
+                onCellClicked={cellClickHandler}
               />
             ) : (
               <div>loading</div>

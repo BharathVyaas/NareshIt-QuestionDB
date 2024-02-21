@@ -175,7 +175,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/modules");
+              navigate("/modules/0");
             }}
           >
             <ListItemButton
@@ -201,7 +201,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/topics");
+              navigate("/topics/0");
             }}
           >
             <ListItemButton
@@ -228,7 +228,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/subtopics");
+              navigate("/subtopics/0");
             }}
           >
             <ListItemButton
@@ -258,7 +258,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/question-view");
+              navigate("/question-view/0");
             }}
           >
             <ListItemButton

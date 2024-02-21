@@ -16,8 +16,12 @@ import Divider from "@mui/material/Divider";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalUi from "../../../ui/ModalUi";
 import ModuleModal from "../../../ui/ModuleModal";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function Modules() {
+  const { TechnologyID } = useParams();
+  const navigate = useNavigate();
   var dispatch = useDispatch();
   const [moduleData, setModuleData] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -30,10 +34,22 @@ function Modules() {
 
   const modulesDataSelector = useSelector((state) => state?.modulesListReduer);
 
+  const moduleFetchHandler = async () => {
+    const res = await axios.get(
+      `https://www.nareshit.net/fetchModules/${TechnologyID}`
+    );
+    setModuleData(res.data);
+  };
+
   useEffect(() => {
-    dispatch(modulesListSlice.actions.request());
-    setModuleData(modulesDataSelector.response);
+    moduleFetchHandler();
   }, []);
+
+  const cellClickHandler = (e) => {
+    if (e.colDef.field !== "Action") {
+      navigate(`/topics/${e.data.ModuleID}`);
+    }
+  };
 
   // Delete Option from the Table
   const handleDelete = (rowData) => {
@@ -59,6 +75,7 @@ function Modules() {
       };
       arr.push(obj);
     });
+
     setColumnDefs([
       {
         field: "ModuleID",
@@ -211,6 +228,7 @@ function Modules() {
                 rowData={rowData}
                 onGridReady={onGridReady}
                 columnDefs={columnDefs}
+                onCellClicked={cellClickHandler}
               />
             ) : (
               <div>loading</div>

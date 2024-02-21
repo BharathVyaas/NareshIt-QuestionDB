@@ -19,10 +19,22 @@ function App() {
             exact
             element={<Technologies></Technologies>}
           />
-          <Route path="/modules" exact element={<Modules></Modules>} />
-          <Route path="/subtopics" exact element={<Subtopics></Subtopics>} />
-          <Route path="/topics" exact element={<Topics></Topics>} />
-          <Route path="/question-view" exact element={<QuestionView />} />
+          <Route
+            path="/modules/:TechnologyID"
+            exact
+            element={<Modules></Modules>}
+          />
+          <Route
+            path="/subtopics/:TopicID"
+            exact
+            element={<Subtopics></Subtopics>}
+          />
+          <Route path="/topics/:ModuleID" exact element={<Topics></Topics>} />
+          <Route
+            path="/question-view/:SubTopicID"
+            exact
+            element={<QuestionView />}
+          />
         </Routes>
       </BrowserRouter>
     </>

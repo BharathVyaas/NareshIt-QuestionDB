@@ -17,8 +17,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Modal } from "@mui/material";
 import ModalUi from "../../../ui/ModalUi";
 import TechnologyModal from "../../../ui/TechnologyModal";
+import { useNavigate } from "react-router-dom";
 
 function Technologies() {
+  const navigate = useNavigate();
   var dispatch = useDispatch();
   const [moduleData, setModuleData] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -32,6 +34,12 @@ function Technologies() {
   const modulesDataSelector = useSelector(
     (state) => state?.technologiesListReducer
   );
+
+  const cellClickHandler = (e) => {
+    if (e.colDef.field !== "Action") {
+      navigate(`/modules/${e.data.TechnologyID}`);
+    }
+  };
 
   // Delete Option from the Table
   const handleDelete = (rowData) => {
@@ -227,6 +235,7 @@ function Technologies() {
                 rowData={rowData}
                 onGridReady={onGridReady}
                 columnDefs={columnDefs}
+                onCellClicked={cellClickHandler}
               />
             ) : (
               <div>loading</div>

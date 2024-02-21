@@ -16,8 +16,12 @@ import Divider from "@mui/material/Divider";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalUi from "../../../ui/ModalUi";
 import TopicModal from "../../../ui/TopicModal";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function Topics() {
+  const { ModuleID } = useParams();
+  const navigate = useNavigate();
   var dispatch = useDispatch();
   const [topicData, setTopicData] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -28,12 +32,23 @@ function Topics() {
   // responsible for storing data required by the modal
   const [modalData, setModalData] = useState(false);
 
-  const topicDataSelector = useSelector((state) => state?.topicsListReducer);
+  const topicHandler = async () => {
+    const res = await axios.get(
+      `https://www.nareshit.net/fetchTopics/${ModuleID}`
+    );
+    setModalData(res.data);
+    setTopicData(res.data);
+  };
 
   useEffect(() => {
-    dispatch(topicsListSlice.actions.request());
-    setTopicData(topicDataSelector.response);
+    topicHandler();
   }, []);
+
+  const cellClickHandler = async (e) => {
+    if (e.colDef.field !== "Action") {
+      navigate(`/subtopics/${e.data.TopicID}`);
+    }
+  };
 
   // Delete Option from the Table
   const handleDelete = (rowData) => {
@@ -50,7 +65,6 @@ function Topics() {
   const onGridReady = (params) => {
     let arr = [];
     Object.keys(topicData)?.forEach((item, i) => {
-      console.log("item", topicData[item].TopicID);
       let obj = {
         TopicID: topicData[item].TopicID,
         // "Description":moduleData[item].Description,
@@ -146,11 +160,6 @@ function Topics() {
     setRowData(arr);
   };
 
-  useEffect(() => {
-    console.log("modulesDataSelector", topicDataSelector);
-    setTopicData(topicDataSelector.response);
-  }, [topicDataSelector]);
-
   // Column Definitions: Defines & controls grid columns.
   // const [colDefs, setColDefs] = useState([
   //   { field: 'ModuleName' },
@@ -202,11 +211,12 @@ function Topics() {
                 New
               </Button>
             </div>
-            {topicData.length > 0 ? (
+            {modalData ? (
               <AgGridReact
                 rowData={rowData}
                 onGridReady={onGridReady}
                 columnDefs={columnDefs}
+                onCellClicked={cellClickHandler}
               />
             ) : (
               <div>loading</div>
