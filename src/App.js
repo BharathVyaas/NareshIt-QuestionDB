@@ -7,6 +7,7 @@ import Subtopics from "./pages/admin/subtopic/Subtopics";
 import Topics from "./pages/admin/topic/Topics";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import QuestionView from "./pages/admin/questionView/QuestionView";
+import GroupQuestionView from "./pages/admin/groupQuestionView/GroupQuestionView";
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
             path="/question-view/:SubTopicID"
             exact
             element={<QuestionView />}
+          />
+          <Route
+            path="/group-question-view/"
+            exact
+            element={<GroupQuestionView />}
           />
         </Routes>
       </BrowserRouter>

@@ -278,7 +278,37 @@ export default function Sidenav() {
                 <TopicIcon />
               </ListItemIcon>
               <ListItemText
-                primary="Question View"
+                primary="MCQ Question View"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/group-question-view");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <TopicIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Group Questions View"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
