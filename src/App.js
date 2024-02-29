@@ -8,6 +8,7 @@ import Topics from "./pages/admin/topic/Topics";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import QuestionView from "./pages/admin/questionView/QuestionView";
 import GroupQuestionView from "./pages/admin/groupQuestionView/GroupQuestionView";
+import Program from "./pages/admin/program/Program";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             exact
             element={<GroupQuestionView />}
           />
+          <Route path="/program/" exact element={<Program />} />
         </Routes>
       </BrowserRouter>
     </>
