@@ -57,6 +57,7 @@ function Editor() {
 
       if (typeof output === "string") setOutput(output.split("\\n"));
       if (typeof output === "number") setOutput([output]);
+      if (typeof output === "object") setOutput(JSON.stringify(output));
     } catch (err) {
       console.error(err);
       setOutput(["error compiling code"]);
@@ -87,7 +88,6 @@ function Editor() {
           defaultLanguage={file?.language}
           language={file?.language}
           defaultValue={file?.value}
-          onValidate={(e) => console.log(e.target.value)}
         />
       </div>
       <div>
