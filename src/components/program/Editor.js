@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import axios from "axios";
+import { Editor as Editor_ } from "@monaco-editor/react";
 
 // technology names should be in lowercase
 const technologies = {
@@ -12,6 +13,11 @@ const technologies = {
     name: "index.js",
     language: "javascript",
     value: "//  This is JavaScript code.",
+  },
+  java: {
+    name: "index.java",
+    language: "java",
+    value: "//  This is Java code.",
   },
 };
 
@@ -67,11 +73,12 @@ function Editor() {
           >
             <option value="c">C</option>
             <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
           </select>
         </div>
       </div>
       <div>
-        <Editor
+        <Editor_
           height="60vh"
           width="80%"
           theme="vs-dark"
