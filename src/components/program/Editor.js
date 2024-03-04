@@ -29,16 +29,16 @@ const reducer = (state, action) => {
   }
 };
 
-function Editor() {
-  const initialState = {
+const obj = {
+  javascript: {
     data: {
       code: `/**
 * @param {number[]} input
 * @returns {number} 
 */
 function sum(x, y){
-  // Your code goes here.
-  
+// Your code goes here.
+
 }`,
       _validatorFunction: "sum",
       _validatorStart: "console.log(sum(",
@@ -50,7 +50,63 @@ function sum(x, y){
     output: undefined,
     error: null,
     loading: false,
-  };
+  },
+  java: {
+    data: {
+      code: `class SumFunctions {
+  public static int sum(int x, int y) {
+    // Your code goes here.
+        
+    }
+}
+`,
+      _validatorFunction: "sum",
+      _validatorStart: `public class Main {
+  public static void main(String[] args) {
+      int result = SumFunctions.sum(`,
+      _validatorEnd: `);
+    System.out.println("Result: " + result);
+  }
+}`,
+      technology: "java",
+      path: "Main.java",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  },
+  c: {
+    data: {
+      code: `#include <stdio.h>
+  
+int sum(int x, int y) {
+  
+}    
+      
+  
+`,
+      _validatorFunction: "sum",
+      _validatorStart: `
+int main() {printf("%d",sum(`,
+      _validatorEnd: `));return 0;
+}`,
+      technology: "c",
+      path: "main.c",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  },
+};
+
+function Editor() {
+  const type = "c";
+
+  const initialState = obj[type];
+
+  if (!initialState) throw new Error("Must enter valid type");
 
   // stores all information regarding this page
   const [state, dispatcher] = useReducer(reducer, initialState);

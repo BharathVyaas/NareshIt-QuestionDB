@@ -18,6 +18,8 @@ const getInput = (ref) => {
 const runInputHandler = async (ref, state, dispatcher) => {
   Observable.notify("runInput", { eventType: "runInput" });
 
+  dispatcher({ type: "loading", payload: true });
+
   const userInput = JSON.stringify(getInput(ref))
     .replace("[", "")
     .replace("]", "");
@@ -48,49 +50,36 @@ const runInputHandler = async (ref, state, dispatcher) => {
       res
     );
 
-    const output = res.data;
+    let output = res.data;
 
+    /**
+     * ToDO
+     * Optimize this
+     */
     if (typeof output === "string")
       dispatcher({ type: "output", payload: output });
     if (typeof output === "number")
       dispatcher({ type: "output", payload: output });
-    if (typeof output === "object")
+    if (typeof output === "object") {
       dispatcher({ type: "output", payload: JSON.stringify(output) });
+
+      Observable.notify("output", {
+        eventType: "output",
+        payload: JSON.stringify(output),
+      });
+    } else {
+      Observable.notify("output", { eventType: "output", payload: output });
+    }
   } catch (err) {
     console.error(err);
-    console.log(["error compiling code"]);
+    dispatcher({ type: "error", payload: err });
   }
-};
 
-/* const getInput = (state) => {
-  return JSON.stringify(state.input).replace("[", "").replace("]", "");
-}; */
-
-// must change updateInput to ref instead of onChange use run Input
-const updateInput = (state, dispatcher, ref) => {
-  const parsedInput = getInput(ref);
-
-  dispatcher({ type: "input", payload: parsedInput });
-
-  return parsedInput;
+  dispatcher({ type: "loading", payload: false });
 };
 
 function InputOutputSection({ state, dispatcher }) {
   const inputRef = useRef();
-
-  // add observer to runInput to update state.input
-  useEffect(() => {
-    Observable.subescribe({
-      eventType: "runInput",
-      key: "input",
-      update: () => {
-        updateInput(state, dispatcher, inputRef);
-      },
-    });
-  }, []);
-
-  // fetch output
-  useEffect(() => {}, []);
 
   // if user pressed on enter while in Input field if input doesn't end with , add , at the end
   useEffect(() => {
