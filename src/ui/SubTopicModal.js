@@ -1,7 +1,5 @@
 import React, { useId, useRef } from "react";
-import { Form } from "react-router-dom";
 import TechnologyName from "../pages/admin/technology/TechnologyName";
-import { useSelector } from "react-redux";
 import ModuleName from "../pages/admin/module/ModuleName";
 import TopicName from "../pages/admin/topic/TopicName";
 import SubTopicName from "../pages/admin/subtopic/SubTopicName";
