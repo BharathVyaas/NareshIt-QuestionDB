@@ -12,7 +12,15 @@ const technologies = {
   javascript: {
     name: "index.js",
     language: "javascript",
-    value: "//  This is JavaScript code.",
+    value: `
+/**
+* @param {number[]} input
+* @returns {number} 
+*/
+function sum(x, y){
+// Your code goes here.
+
+}`,
   },
   java: {
     name: "index.java",
