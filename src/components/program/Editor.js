@@ -1,19 +1,38 @@
-import { useRef, useState } from "react";
-import axios from "axios";
-import { Editor as Editor_ } from "@monaco-editor/react";
+import { useEffect, useReducer } from "react";
+import CodeEditor from "./CodeEditor";
+import InputOutputSection from "./InputOutputSection";
+import TestCaseTable from "./TestCaseTable";
 
-// technology names should be in lowercase
-const technologies = {
-  c: {
-    name: "index.c",
-    language: "c",
-    value: "//  This is C code.",
-  },
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "code": {
+      return { ...state, data: { ...state.data, code: action.payload } };
+    }
+    case "technology": {
+      return { ...state, data: { ...state.data, technology: action.payload } };
+    }
+    case "input": {
+      return { ...state, input: action.payload };
+    }
+    case "output": {
+      return { ...state, output: action.payload };
+    }
+    case "error": {
+      return { ...state, error: action.payload };
+    }
+    case "loading": {
+      return { ...state, loading: action.payload };
+    }
+    default: {
+      throw new Error("Editor: Invalid case", action.type);
+    }
+  }
+};
+
+const obj = {
   javascript: {
-    name: "index.js",
-    language: "javascript",
-    value: `
-/**
+    data: {
+      code: `/**
 * @param {number[]} input
 * @returns {number} 
 */
@@ -21,90 +40,93 @@ function sum(x, y){
 // Your code goes here.
 
 }`,
+      _validatorFunction: "sum",
+      _validatorStart: "console.log(sum(",
+      _validatorEnd: "))",
+      technology: "javascript",
+      path: "index.js",
+    },
+    input: [],
+    output: undefined,
+    error: null,
+    loading: false,
   },
   java: {
-    name: "index.java",
-    language: "java",
-    value: "//  This is Java code.",
+    data: {
+      code: `class SumFunctions {
+  public static int sum(int x, int y) {
+    // Your code goes here.
+        
+    }
+}
+`,
+      _validatorFunction: "sum",
+      _validatorStart: `public class Main {
+  public static void main(String[] args) {
+      int result = SumFunctions.sum(`,
+      _validatorEnd: `);
+    System.out.println("Result: " + result);
+  }
+}`,
+      technology: "java",
+      path: "Main.java",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  },
+  c: {
+    data: {
+      code: `#include <stdio.h>
+  
+int sum(int x, int y) {
+  
+}    
+      
+  
+`,
+      _validatorFunction: "sum",
+      _validatorStart: `
+int main() {printf("%d",sum(`,
+      _validatorEnd: `));return 0;
+}`,
+      technology: "c",
+      path: "main.c",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
   },
 };
 
 function Editor() {
-  const [technology, setTechnology] = useState("c");
-  const editorRef = useRef(null);
-  const file = technologies[technology];
+  const type = "c";
 
-  const [output, setOutput] = useState([]);
+  const initialState = obj[type];
 
-  function handleEditorDidMount(editor, monaco) {
-    editorRef.current = editor;
-  }
+  if (!initialState) throw new Error("Must enter valid type");
 
-  async function getOutput() {
-    try {
-      const res = await axios.get("http://localhost:4000/program/compile", {
-        params: {
-          input: editorRef.current.getValue(),
-          type: technology,
-        },
-      });
+  // stores all information regarding this page
+  const [state, dispatcher] = useReducer(reducer, initialState);
 
-      console.log(
-        "url",
-        "http://localhost:4000/program/compile\n",
-        "data",
-        {
-          input: editorRef.current.getValue(),
-          type: technology,
-        },
-        "\nres",
-        res
-      );
-
-      const output = res.data;
-
-      if (typeof output === "string") setOutput(output.split("\\n"));
-      if (typeof output === "number") setOutput([output]);
-      if (typeof output === "object") setOutput(JSON.stringify(output));
-    } catch (err) {
-      console.error(err);
-      setOutput(["error compiling code"]);
-    }
-  }
+  useEffect(() => {
+    console.log("stateChange", state);
+  }, [state]);
 
   return (
     <div>
       <div>
-        <div>
-          <select
-            onChange={(e) => setTechnology(e.target.value)}
-            defaultValue="c"
-          >
-            <option value="c">C</option>
-            <option value="javascript">JavaScript</option>
-            <option value="java">Java</option>
-          </select>
-        </div>
+        {/**  Monaco Code Editor */}
+        <CodeEditor state={state} dispatcher={dispatcher} />
       </div>
       <div>
-        <Editor_
-          height="60vh"
-          width="80%"
-          theme="vs-dark"
-          onMount={handleEditorDidMount}
-          path={file?.name}
-          defaultLanguage={file?.language}
-          language={file?.language}
-          defaultValue={file?.value}
-        />
+        <InputOutputSection state={state} dispatcher={dispatcher} />
       </div>
       <div>
-        {output.map((line) => (
-          <pre key={Math.random().toString()}>{line}</pre>
-        ))}
+        <TestCaseTable state={state} dispatcher={dispatcher} />
       </div>
-
-      <button onClick={getOutput}>Test</button>
     </div>
   );
 }

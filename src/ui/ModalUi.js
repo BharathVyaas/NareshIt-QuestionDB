@@ -1,4 +1,3 @@
-import { Modal } from "@mui/material";
 import React from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";

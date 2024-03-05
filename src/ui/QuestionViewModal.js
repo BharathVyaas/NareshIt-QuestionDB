@@ -1,4 +1,4 @@
-import React, { useId, useState } from "react";
+import React from "react";
 import QuestionViewModalView from "../components/questionView.js/QuestionViewModalView";
 import QuestionViewModalEdit from "../components/questionView.js/QuestionViewModalEdit";
 
@@ -7,8 +7,6 @@ function QuestionViewModal({
   modalCancelHandler,
   modalSubmitHandler,
 }) {
-  const id = useId();
-
   let content = (
     <QuestionViewModalEdit
       modalData={modalData}

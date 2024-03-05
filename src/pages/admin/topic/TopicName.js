@@ -51,7 +51,7 @@ function TopicName({ flag, modalData, topicId }, ref) {
 
   useEffect(() => {
     dropDownChangeHandler(topicName, modulesDataSelector?.response);
-  }, [topicName, modulesDataSelector]);
+  }, [topicName, modulesDataSelector, dropDownChangeHandler]);
 
   return (
     <div className="technologyModal-form-input">
@@ -80,8 +80,8 @@ function TopicName({ flag, modalData, topicId }, ref) {
         {/*   DropDown for the Topic Name   */}
         {dropDown && (
           <div className="technologyModal-dropbox">
-            {includedDropDownItems.map((item) => {
-              if (item.TopicName)
+            {includedDropDownItems.filter((item) => {
+              if (item.TopicName) {
                 return (
                   <p
                     key={item.TopicID}
@@ -90,6 +90,8 @@ function TopicName({ flag, modalData, topicId }, ref) {
                     {item.TopicName}
                   </p>
                 );
+              }
+              return null;
             })}
           </div>
         )}
