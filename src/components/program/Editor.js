@@ -53,21 +53,16 @@ function sum(x, y){
   },
   java: {
     data: {
-      code: `class Solution {
-  public static int sum(int x, int y) {
-    // Your code goes here.
-        
+      code: `public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
     }
-}
+    
 `,
       _validatorFunction: "sum",
-      _validatorStart: `public class Main {
-  public static void main(String[] args) {
-      int result = Solution.sum(`,
-      _validatorEnd: `);
-    System.out.println("Result: " + result);
-  }
-}`,
+      _validatorStart: ``,
+      _validatorEnd: ``,
       technology: "java",
       path: "Main.java",
     },
