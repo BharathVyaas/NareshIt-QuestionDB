@@ -53,7 +53,7 @@ function sum(x, y){
   },
   java: {
     data: {
-      code: `class SumFunctions {
+      code: `class Solution {
   public static int sum(int x, int y) {
     // Your code goes here.
         
@@ -63,7 +63,7 @@ function sum(x, y){
       _validatorFunction: "sum",
       _validatorStart: `public class Main {
   public static void main(String[] args) {
-      int result = SumFunctions.sum(`,
+      int result = Solution.sum(`,
       _validatorEnd: `);
     System.out.println("Result: " + result);
   }
@@ -102,7 +102,7 @@ int main() {printf("%d",sum(`,
 };
 
 function Editor() {
-  const type = "c";
+  const type = "java";
 
   const initialState = obj[type];
 
