@@ -51,23 +51,22 @@ const runInputHandler = async (ref, state, dispatcher) => {
     );
 
     let output = res.data;
+    let tempOutput = res.data;
 
     /**
      * ToDO
      * Optimize this
      */
-    if (typeof output === "string")
-      dispatcher({ type: "output", payload: output });
-    if (typeof output === "number")
-      dispatcher({ type: "output", payload: output });
-    if (typeof output === "object") {
-      dispatcher({ type: "output", payload: JSON.stringify(output) });
+
+    if (tempOutput === state.data.expectedOutput) {
+      dispatcher({ type: "output", payload: "true" });
 
       Observable.notify("output", {
         eventType: "output",
-        payload: JSON.stringify(output),
+        payload: output,
       });
     } else {
+      dispatcher({ type: "output", payload: "false" });
       Observable.notify("output", { eventType: "output", payload: output });
     }
   } catch (err) {

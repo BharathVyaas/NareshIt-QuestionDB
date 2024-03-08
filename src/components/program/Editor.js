@@ -29,79 +29,62 @@ const reducer = (state, action) => {
   }
 };
 
-const obj = {
-  javascript: {
+function Editor() {
+  const initialState = {
     data: {
-      code: `/**
-* @param {number[]} input
-* @returns {number} 
-*/
-function sum(x, y){
-// Your code goes here.
+      code: `import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from System.in
+        Scanner scanner = new Scanner(System.in);
 
-}`,
-      _validatorFunction: "sum",
-      _validatorStart: "console.log(sum(",
-      _validatorEnd: "))",
-      technology: "javascript",
-      path: "index.js",
+        // Check if an argument is provided
+        if (args.length > 0) {
+            // Parse the argument as an integer
+            int n = Integer.parseInt(args[0]);
+            
+            // Generate and print the Fibonacci series
+            for (int i = 0; i < n; i++) {
+                System.out.print(fibonacci(i) + " ");
+            }
+        } else {
+            // Prompt the user to provide the number of terms
+            int n = scanner.nextInt();
+            
+            // Generate and print the Fibonacci series
+            for (int i = 0; i < n; i++) {
+                System.out.print(fibonacci(i) + " ");
+            }
+        }
+        
+        // Close the scanner to release resources
+        scanner.close();
+    }
+    
+    // Function to calculate the nth Fibonacci number
+    public static int fibonacci(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
+           
+`,
+      input: "5",
+      output: "",
+      expectedOutput: "0 1 1 2 3",
+      _validatorFunction: "fibonacci",
+      _validatorStart: "",
+      _validatorEnd: "",
+      technology: "java",
+      path: "index.java",
     },
     input: [],
     output: undefined,
     error: null,
     loading: false,
-  },
-  java: {
-    data: {
-      code: `public class Main {
-        public static void main(String[] args) {
-            System.out.println("Hello, world!");
-        }
-    }
-    
-`,
-      _validatorFunction: "sum",
-      _validatorStart: ``,
-      _validatorEnd: ``,
-      technology: "java",
-      path: "Main.java",
-    },
-    input: [],
-    output: null,
-    error: null,
-    loading: false,
-  },
-  c: {
-    data: {
-      code: `#include <stdio.h>
-  
-int sum(int x, int y) {
-  
-}    
-      
-  
-`,
-      _validatorFunction: "sum",
-      _validatorStart: `
-int main() {printf("%d",sum(`,
-      _validatorEnd: `));return 0;
-}`,
-      technology: "c",
-      path: "main.c",
-    },
-    input: [],
-    output: null,
-    error: null,
-    loading: false,
-  },
-};
-
-function Editor() {
-  const type = "java";
-
-  const initialState = obj[type];
-
-  if (!initialState) throw new Error("Must enter valid type");
+  };
 
   // stores all information regarding this page
   const [state, dispatcher] = useReducer(reducer, initialState);
