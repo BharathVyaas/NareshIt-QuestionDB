@@ -1,6 +1,28 @@
 import Editor from "@monaco-editor/react";
 import { useRef } from "react";
 
+const options = {
+  autoIndent: 'full',
+  contextmenu: true,
+  fontFamily: 'monospace',
+  fontSize: 13,
+  lineHeight: 24,
+  hideCursorInOverviewRuler: true,
+  matchBrackets: 'always',
+  minimap: {
+    enabled: true,
+  },
+  scrollbar: {
+    horizontalSliderSize: 4,
+    verticalSliderSize: 18,
+  },
+  selectOnLineNumbers: true,
+  roundedSelection: false,
+  readOnly: false,
+  cursorStyle: 'line',
+  automaticLayout: true,
+}; 
+
 function CodeEditor({ state, dispatcher }) {
   const editorRef = useRef(null);
 
@@ -18,10 +40,10 @@ function CodeEditor({ state, dispatcher }) {
       <Editor
         height="60vh"
         width="80%"
-        theme="vs-dark"
         onMount={handleEditorDidMount}
         path={state.data.path}
         defaultLanguage={state.data.technology}
+        options={options}
         language={state.data.technology}
         onChange={onValueChange}
         defaultValue={state.data.code}

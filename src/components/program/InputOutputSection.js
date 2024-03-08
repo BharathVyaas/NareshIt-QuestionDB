@@ -112,7 +112,11 @@ function InputOutputSection({ state, dispatcher }) {
           onClick={() => runInputHandler(inputRef, state, dispatcher)}
           className="bg-green-400 px-4 py-1 mx-1"
         >
+<<<<<<< HEAD
+          Run Test Case
+=======
           Execute
+>>>>>>> origin/main
         </button>
       </div>
       <div className="flex flex-col px-3">

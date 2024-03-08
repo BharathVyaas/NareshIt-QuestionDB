@@ -32,6 +32,7 @@ const reducer = (state, action) => {
 function Editor() {
   const initialState = {
     data: {
+<<<<<<< HEAD
       code: `import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
@@ -79,12 +80,72 @@ public class Main {
       _validatorEnd: "",
       technology: "java",
       path: "index.java",
+=======
+      code: ``,
+      _validatorFunction: "sum",
+      _validatorStart: "",
+      _validatorEnd: "",
+      technology: "javascript",
+      path: "index.js",
+>>>>>>> 20e2db18fc4aceb70cfc3ddfce21f0178411ae7b
     },
     input: [],
     output: undefined,
     error: null,
     loading: false,
+<<<<<<< HEAD
   };
+=======
+  },
+  java: {
+    data: {
+      code: ``,
+      _validatorFunction: "sum",
+      _validatorStart: ``,
+      _validatorEnd: ``,
+      technology: "java",
+      path: "Main.java",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  },
+  c: {
+    data: {
+      code: ``,
+      _validatorFunction: "",
+      _validatorStart: ``,
+      technology: "c",
+      path: "main.c",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  },python: {
+    data: {
+      code: ``,
+      _validatorFunction: "sum",
+      _validatorStart: ``,
+      _validatorEnd: ``,
+      technology: "python",
+      path: "main.py",
+    },
+    input: [],
+    output: null,
+    error: null,
+    loading: false,
+  }
+};
+
+function Editor() {
+  const type = "python";
+
+  const initialState = obj[type];
+
+  if (!initialState) throw new Error("Must enter valid type");
+>>>>>>> 20e2db18fc4aceb70cfc3ddfce21f0178411ae7b
 
   // stores all information regarding this page
   const [state, dispatcher] = useReducer(reducer, initialState);
